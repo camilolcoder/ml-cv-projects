@@ -33,7 +33,7 @@ me.streamon()
 
 
 while True:
-    # success, img = cap.read()
+    #  success, img = cap.read()
     img = me.get_frame_read().frame
     classIds, confs, bbox = net.detect(img, confThreshold=thres, nmsThreshold=nmsThres)
     try:
