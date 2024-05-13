@@ -12,6 +12,7 @@ import numpy as np
 
 w, h = 360, 240
 pid = [0.5, 0.5, 0]
+fbRange = [6200, 6800]
 pError = 0
 startCounter = 1
 
@@ -60,53 +61,48 @@ def findFace(img):
     else:
         return img, [[0,0],0]
 
-def trackFace(myDrone,c,w,pid,pError):
-    print(c)
+def trackFace(myDrone,info,w,pid,pError):
+    area = info[1]
+    x, y = info[0]
+    fb = 0
+    
     error = c[0][0] - w//2   
-    # Current Value - Target Value
-    if pError is not None:
-        speed = int(pid[0] * error + pid[1] * (error - pError))
-    else:
-        speed = int(pid[0] * error)
-    speed = np.clip(speed, -100, 100)
-    print(speed)
+    speed = pid[0] * error + pid[1] * (error - pError)
+    speed = int(np.clip(speed, -100, 100))
+#<
+    if area > fbRange[0] and area < fbRange[1]:
+        fb = 0
+    elif area > fbRange[1]:
+        fb = -20
+    elif area < fbRange[0] and area != 0:
+        fb = 20
+    
+    print(speed, fb)
 
-    if c[0][0] != 0:
-        myDrone.yaw_velocity = speed
-    else:
-        myDrone.left_right_velocity = 0
-        myDrone.for_back_velocity = 0
-        myDrone.up_down_velocity = 0
-        myDrone.yaw_velocity = 0
+    if x == 0:
+        speed = 0
         error = 0
-    # SEND VELOCITY VALUES TO TELLO
-    if myDrone.send_rc_control:
-        myDrone.send_rc_control(myDrone.left_right_velocity,myDrone.for_back_velocity,
-        myDrone.up_down_velocity, myDrone.yaw_velocity)
+    
+    myDrone.send_rc_control(0, fb, 0, speed)
 
     return error
 
 
 myDrone = intializeTello()
 
+car = 0
+#time.sleep(4)
+
 while True:
 
-    if startCounter == 0:
+    img = telloGetFrame(myDrone)
+    img, c = findFace(img)
+    pError = trackFace(myDrone,c,w,pid,pError)
+
+    if car == 0:
         myDrone.takeoff()
         myDrone.send_rc_control(0, 0, 40, 0)
-        time.sleep(5)
-        startCounter = 1
-
-    ## STEP 1
-    img = telloGetFrame(myDrone)
-    # WAIT FOR THE 'Q' BUTTON TO STOP
-    ## STEP 2
-    img, c = findFace(img)
-    ## STEP 3
-    if len(c) != 0:
-        pError = trackFace(myDrone,c,w,pid,pError)
-    else:
-        pError = 0
+        car = 1
 
     cv2.imshow("Follow", img)
     if cv2.waitKey(1) and 0xFF == ord('q'):
