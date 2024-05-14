@@ -41,7 +41,7 @@ def telloGetFrame(myDrone,w=360,h=240):
 def findFace(img):
     faceCascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    faces = faceCascade.detectMultiScale(imgGray, 1.1, 4)
+    faces = faceCascade.detectMultiScale(imgGray, 1.2, 8)
 
     myFacesListC = []
     myFaceListArea = []
@@ -51,6 +51,7 @@ def findFace(img):
         cx = x + w//2
         cy = y + h//2
         area = w*h
+        cv2.circle(img, (cx, cy), 5, (0, 255, 0), cv2.FILLED)
         myFacesListC.append([cx,cy])
         myFaceListArea.append(area)
 
@@ -92,9 +93,11 @@ myDrone = intializeTello()
 
 car = 0
 #time.sleep(4)
+#cap = cv2.VideoCapture(1)
 
 while True:
 
+    #_, img = cap.read()
     img = telloGetFrame(myDrone)
     img, c = findFace(img)
     pError = trackFace(myDrone,c,w,pid,pError)
@@ -105,6 +108,7 @@ while True:
         car = 1
 
     cv2.imshow("Follow", img)
+    cv2.waitKey(1)
     if cv2.waitKey(1) and 0xFF == ord('q'):
     # replace the 'and' with '&amp;'
         myDrone.land()
