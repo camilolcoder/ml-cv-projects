@@ -62,6 +62,30 @@ def findFace(img):
     else:
         return img, [[0,0],0]
 
+def findUpperBody(img):
+    faceCascade = cv2.CascadeClassifier("haarcascade_upperbody.xml")
+    imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    faces = faceCascade.detectMultiScale(imgGray, 1.2, 8)
+
+    myFacesListC = []
+    myFaceListArea = []
+
+    for (x, y, w, h) in faces:
+        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+        cx = x + w//2
+        cy = y + h//2
+        area = w*h
+        cv2.circle(img, (cx, cy), 5, (0, 255, 0), cv2.FILLED)
+        myFacesListC.append([cx,cy])
+        myFaceListArea.append(area)
+
+    if len(myFaceListArea) != 0:
+        i = myFaceListArea.index(max(myFaceListArea))
+        # index of closest face
+        return img,[myFacesListC[i],myFaceListArea[i]]
+    else:
+        return img, [[0,0],0]
+
 def trackFace(myDrone,info,w,pid,pError):
     area = info[1]
     x, y = info[0]
@@ -99,7 +123,8 @@ while True:
 
     _, img = cap.read()
     #img = telloGetFrame(myDrone)
-    img, c = findFace(img)
+    #img, c = findFace(img)
+    img, c = findUpperBody(img)
     #pError = trackFace(myDrone,c,w,pid,pError)
 
     # if car == 0:
