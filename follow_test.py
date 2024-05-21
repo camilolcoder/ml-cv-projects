@@ -89,28 +89,28 @@ def trackFace(myDrone,info,w,pid,pError):
     return error
 
 
-myDrone = intializeTello()
+#myDrone = intializeTello()
 
-car = 0
+car = 1
 #time.sleep(4)
-#cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(2) # To be able to use external logitech camera I have to turn it on using the logitech app
 
 while True:
 
-    #_, img = cap.read()
-    img = telloGetFrame(myDrone)
+    _, img = cap.read()
+    #img = telloGetFrame(myDrone)
     img, c = findFace(img)
-    pError = trackFace(myDrone,c,w,pid,pError)
+    #pError = trackFace(myDrone,c,w,pid,pError)
 
-    if car == 0:
-        myDrone.takeoff()
-        myDrone.send_rc_control(0, 0, 40, 0)
-        car = 1
+    # if car == 0:
+    #     myDrone.takeoff()
+    #     myDrone.send_rc_control(0, 0, 40, 0)
+    #     car = 1
 
     cv2.imshow("Follow", img)
     cv2.waitKey(1)
-    if cv2.waitKey(1) and 0xFF == ord('q'):
-    # replace the 'and' with '&amp;'
-        myDrone.land()
-        break
+    # if cv2.waitKey(1) and 0xFF == ord('q'):
+    # # replace the 'and' with '&amp;'
+    #     myDrone.land()
+    #     break
     
