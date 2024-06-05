@@ -117,14 +117,14 @@ def trackFace(myDrone,info,w,pid,pError):
 
 car = 1
 #time.sleep(4)
-cap = cv2.VideoCapture(2) # To be able to use external logitech camera I have to turn it on using the logitech app
+cap = cv2.VideoCapture(0) # To be able to use external logitech camera I have to turn it on using the logitech app
 
 while True:
 
     _, img = cap.read()
     #img = telloGetFrame(myDrone)
-    #img, c = findFace(img)
-    img, c = findUpperBody(img)
+    img, c = findFace(img)
+    #img, c = findUpperBody(img)
     #pError = trackFace(myDrone,c,w,pid,pError)
 
     # if car == 0:
