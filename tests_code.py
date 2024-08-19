@@ -1,6 +1,7 @@
 
 #test_list = [6,1,3,2,4,7]
-test_list = [3, 8, 2, 4, 11, 1, 2, 12]
+test_list = [7,1,5,3,6,4]
+#[3, 8, 2, 4, 11, 1, 2, 12]
 #[2,7,1,4,11]
 
 # [3, 8, 2, 4, 11, 1, 2, 12]
@@ -43,7 +44,28 @@ def maxProfit(prices) -> int:
         else:
             l = r
         r += 1
-        
+
     return max_profit 
 
-print(maxProfit(test_list))
+# 122 Leetcode - best time to sell stocks 2 
+
+def maxProfit2(prices) -> int:
+    #aproach with to pointers
+    l, r = 0, 1
+    total_profit = 0
+    while r < len(prices):
+        if prices[l] < prices[r]:
+            profit = prices[r] - prices[l]
+            if profit > 0:
+                l = r
+                total_profit += profit
+        else:
+            l = r
+        r += 1
+
+        
+    return total_profit 
+
+
+print(maxProfit2(test_list))
+
