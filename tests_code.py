@@ -67,5 +67,62 @@ def maxProfit2(prices) -> int:
     return total_profit 
 
 
-print(maxProfit2(test_list))
+#print(maxProfit2(test_list))
+
+#Jump Game 55
+
+# Example 1:
+
+# Input: nums = [2,3,1,1,4]
+# Output: true
+# Explanation: Jump 1 step from index 0 to 1, then 3 steps to the last index.
+# Example 2:
+
+# Input: nums = [3,2,1,0,4]
+# Output: false
+# Explanation: You will always arrive at index 3 no matter what. Its maximum jump length is 0, which makes it impossible to reach the last index.
+test_list = [2,3,1,1,4]
+
+def canJump(nums) -> bool:
+    goal = len(nums) - 1
+    for i in range(len(nums) - 1, -1, -1):
+        if i + nums[i] >= goal:
+            goal = i
+    
+    return True if goal == 0 else False
+
+#print(canJump(test_list))
+
+# 14. Longest Common Prefix
+# O(n)^2
+
+def checker(word1, word2):
+    prefix = ""
+    tester = word1
+    if len(word1) > len(word2):
+        tester = word2
+    for i in range(len(tester)):
+        if word1[i] != word2[i]:
+            return prefix
+        else:
+            prefix += tester[i]
+    return prefix
+
+word1 = "reflower"
+word2 = "flow"
+print(checker(word1, word2))
+
+
+def longestCommonPrefix(strs) -> str:
+        lcp = strs[0]
+        last_common = ""
+        for i in range(len(strs) - 1):
+            lcp = self.checker(lcp, strs[i + 1])
+            if lcp == "":
+                return lcp
+
+        if len(strs) == 1:
+            return strs[0]
+
+        return lcp
 
