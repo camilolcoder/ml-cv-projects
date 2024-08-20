@@ -186,7 +186,7 @@ t ="abc"
 
 x = ""
 
-print(list(x))
+#print(list(x))
 
 def isSubsequence(s: str, t: str) -> bool:
     s = list(s)
@@ -216,14 +216,14 @@ gt = len(haystack)
 counter =  0
 
 
-print(haystack[:len(needle)])
+#print(haystack[:len(needle)])
 
 def compare_words(haystack, needle, counter):
     if haystack[:len(needle)] == needle:
         return counter
     elif counter > gt:
         return -1
-    counter += len(needle)
+    counter += 1
     return compare_words(haystack[1:], needle, counter)
 
 def strStr(haystack: str, needle: str) -> int:
@@ -231,4 +231,69 @@ def strStr(haystack: str, needle: str) -> int:
     while True:
         None
 
-print(compare_words(haystack, needle, counter))
+#print(compare_words(haystack, needle, counter))
+# if True:
+#     print("s")
+# for i in range(5, -1, -1):
+#     print(i)
+
+
+# 209 Minimun sub array sum
+
+def minSubArrayLen(target, nums) -> int:
+        l, total = 0, 0
+        min_sa = float("inf")
+
+        for r in range(len(nums)):
+            total += nums[r]
+            while total >= target:
+                min_sa = min(r - l + 1, min_sa)
+                total -= nums[l]
+                l += 1
+        
+        return 0 if min_sa == float("inf") else min_sa
+
+list_test = [1, 2, 3, 4, 5]
+list_test.pop(0)
+
+#print(list_test)
+
+s = "aab"
+
+#3. Longest Substring wihtout Repeating characters
+
+# def lengthOfLongestSubstring(s: str) -> int:
+#     normal_s = s
+#     memory = set()
+#     s = list(s)
+#     lls = 0
+
+#     for i in range(len(normal_s)):
+#         print(i)
+#         if normal_s[i] not in memory:
+#             memory.add(normal_s[i])
+#         else:
+#             lls = max(lls, len(memory))
+#             s = s[i:]
+#             memory = set()
+#             memory.add(normal_s[i])
+            
+#         print(s, memory, lls)
+
+#     return lls
+
+def lengthOfLongestSubstring(s: str) -> int:
+
+    memory = set()
+    l = 0
+    lls = 0
+    for r in range(len(s)):
+        while s[r] in memory:
+            memory.remove(s[l])
+            l += 1
+        memory.add(s[r])
+        lls = max(lls, r - l + 1)
+    
+    return lls
+
+print(lengthOfLongestSubstring(s))
