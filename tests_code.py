@@ -110,14 +110,14 @@ def checker(word1, word2):
 
 word1 = "reflower"
 word2 = "flow"
-print(checker(word1, word2))
+#print(checker(word1, word2))
 
 
 def longestCommonPrefix(strs) -> str:
         lcp = strs[0]
         last_common = ""
         for i in range(len(strs) - 1):
-            lcp = self.checker(lcp, strs[i + 1])
+            lcp = checker(lcp, strs[i + 1])
             if lcp == "":
                 return lcp
 
@@ -126,3 +126,51 @@ def longestCommonPrefix(strs) -> str:
 
         return lcp
 
+
+# 134. Gas Station
+
+gas = [4,5,3,1,4]
+cost = [5,4,3,4,2]
+
+# gas = [1,2,3,4,5]
+# cost = [3,4,5,1,2]
+
+# gas = [2,3,4]
+# cost = [3,4,3]
+
+def reconstruct_list(sp, gas, cost):
+    gas1 = gas[sp:]
+    gas2 = gas[:sp]
+    cost1 = cost[sp:]
+    cost2 = cost[:sp]
+
+    return (gas1 + gas2), (cost1 + cost2)
+
+def try_circuit(sp, gas, cost):
+    new_lists = reconstruct_list(sp, gas, cost)
+    gas = new_lists[0]
+    cost = new_lists[1]
+    print(gas, cost)
+
+    current = gas[0]
+    for i in range(len(gas) - 1):
+        print(i, "----")
+        if current - cost[i] > 0:
+            current = current - cost[i] + gas[i + 1]
+            print(current)
+        else:
+            current = -1
+            return current
+    if current - cost[-1] < 0:
+        return -1
+    return current
+
+def canCompleteCircuit(gas, cost) -> int:
+    
+    for i in range(len(gas)):
+        if gas[i] > cost[i]:
+            if try_circuit(i, gas, cost) > 0:
+                return i
+    return -1 
+
+print(canCompleteCircuit(gas, cost))
