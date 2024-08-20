@@ -173,4 +173,62 @@ def canCompleteCircuit(gas, cost) -> int:
                 return i
     return -1 
 
-print(canCompleteCircuit(gas, cost))
+#print(canCompleteCircuit(gas, cost))
+
+
+#392. Is Subsequence
+
+# s = "abc"
+# t = "ahbgdc"
+
+s = "b"
+t ="abc"
+
+x = ""
+
+print(list(x))
+
+def isSubsequence(s: str, t: str) -> bool:
+    s = list(s)
+    t = list(t)
+
+    if len(s) == 0:
+        return False
+
+    while len(t) > 0:
+        if t[-1] != s[-1]:
+            t.pop()
+        elif t[-1] == s[-1]:
+            t.pop()
+            s.pop()
+        if len(s) == 0:
+            return True
+    return False
+
+#print(isSubsequence(s, t))
+
+
+#28. Find the Index of the First Occurrence in a String
+
+haystack = "sadbutsad"
+needle = "sad"
+gt = len(haystack)
+counter =  0
+
+
+print(haystack[:len(needle)])
+
+def compare_words(haystack, needle, counter):
+    if haystack[:len(needle)] == needle:
+        return counter
+    elif counter > gt:
+        return -1
+    counter += len(needle)
+    return compare_words(haystack[1:], needle, counter)
+
+def strStr(haystack: str, needle: str) -> int:
+    position = 0
+    while True:
+        None
+
+print(compare_words(haystack, needle, counter))
