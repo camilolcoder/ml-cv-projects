@@ -296,4 +296,65 @@ def lengthOfLongestSubstring(s: str) -> int:
     
     return lls
 
-print(lengthOfLongestSubstring(s))
+#print(lengthOfLongestSubstring(s))
+
+arr_test = [1, 2, 7, 12, 34, 76, 89, 112, 113, 134]
+
+# def binarySearchTest(arr, target): # Decent but im not using O(1) memory
+
+#     l, r = 0, len(arr) - 1
+#     mid = len(arr)//2
+#     while l < r:
+#         print(arr, mid)
+#         if target == arr[mid]:
+#             return True
+#         elif target > arr[mid]:
+#             arr = arr[mid:]
+#         else:
+#             arr = arr[:mid]
+
+#         r = len(arr) - 1
+#         mid = len(arr)//2
+#     return False
+
+def binarySearchTest(arr, target): # Now using O(1) memory
+
+    l, r = 0, len(arr) - 1
+    mid = 0
+    while l <= r:
+        mid = (r + l)//2
+        print(mid, l, r)
+
+        if target > arr[mid]:
+            #arr = arr[mid:]
+            l = mid + 1
+        elif target < arr[mid]:
+            #arr = arr[:mid]
+            r = mid - 1
+        else:
+            return True
+        
+    return False
+
+#35. Search Insert Position
+
+#print(binarySearchTest(arr_test, 13))
+
+# def checker()
+
+def searchInsert(nums, target):
+    
+    l, r = 0, len(nums) - 1
+
+    while l <= r:
+        mid = (l + r)//2
+
+        if target > nums[mid]:
+            l = mid + 1
+        elif target < nums[mid]:
+            r = mid - 1
+        elif target == nums[mid]:
+            return mid
+    return l
+        
+print(searchInsert(arr_test, 180))
