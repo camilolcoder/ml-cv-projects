@@ -357,4 +357,83 @@ def searchInsert(nums, target):
             return mid
     return l
         
-print(searchInsert(arr_test, 180))
+#print(searchInsert(arr_test, 180))
+
+nums = [0, 0, 1, 1, 1, 1, 2 ,3, 3, 3, 4, 7, 7, 8, 9] 
+#[0,0,1,1,1,2,2,3,3,4]
+
+# def removeDuplicates(nums) -> int: This wont work because of the indexsss
+#     memory = set()
+#     for i in range(len(nums)):
+#         print(nums, i, nums[i])
+#         if nums[i] not in memory:
+#             memory.add(nums[i])
+#         else:
+#             nums.pop(i)
+#             nums.append("_")
+#     return len(memory)
+
+# def removeDuplicates(nums) -> int:
+#     memory = set()
+#     l = 0
+#     while l < len(nums):
+#         print(memory, nums, l, nums[l])
+#         if nums[l] not in memory:
+#             memory.add(nums[l])
+#             nums.append("_")
+#             l += 1
+#         elif nums[l] == "_":
+#             break
+#         else:
+#             nums.pop(l)
+#             nums.append("_")
+#     return len(memory) - 1
+
+def removeDuplicates(nums) -> int:
+    l = 1
+    for r in range(1, len(nums)):
+        print(nums)
+        if nums[r] != nums[r-1]:
+            nums[l] = nums[r]
+            l += 1
+    #print(nums)
+    return l
+
+#print(removeDuplicates(nums))
+
+nums = [1, 2, 3, 0, 0, 4, 5, 6, 0, 7, 0, 0, 0, 2]
+
+def moveZeroes(nums) -> None:
+    """
+    Do not return anything, modify nums in-place instead.
+    """
+    starter = True
+    l = 0
+    for r in range(len(nums)):
+        if starter:
+            if nums[r] == 0:
+                starter = False
+                l = r
+        elif nums[r] != 0:
+            nums[l] = nums[r]
+            nums[r] = 0
+            l += 1
+    print(nums)
+
+print(moveZeroes(nums))
+
+def removeDuplicatesII(nums) -> int:
+    l, r = 0, 0
+
+    while r < len(nums):
+        count = 1
+        while r + 1 < len(nums) and nums[r] == nums[r + 1]:
+            r += 1
+            count += 1
+        
+        for i in range(min(2, count)):
+            nums[l] = nums[r]
+            l += 1
+        r += 1
+    return l
+
