@@ -437,3 +437,61 @@ def removeDuplicatesII(nums) -> int:
         r += 1
     return l
 
+#181 Rotate Array FLAWEDDDDDD solution
+
+# def rotate(nums, k: int) -> None:
+#     """
+#     Do not return anything, modify nums in-place instead.
+#     """
+#     if len(nums) == 1:
+#         return nums
+#     l = 0
+#     for r in range(len(nums) - k, len(nums)):
+#         memory = nums[l]
+#         nums[l] = nums[r]
+#         nums[r] = memory
+#         l += 1
+#     if len(nums)%2 != 0:
+#         value = nums[len(nums)-k -1]
+#         nums.pop(len(nums) - k-1)
+#         nums.append(value)
+
+# The following is the right solution for O(1) time complexity
+def rotate(nums, k: int) -> None:
+    """
+    Do not return anything, modify nums in-place instead.
+    """
+    k = k % len(nums)
+    def rev(l, r):
+        while l < r:
+            nums[l], nums[r] = nums[r], nums[l]
+            l +=1
+            r -=1
+
+    rev(0, len(nums) - 1)
+    rev(0, k-1)
+    rev(k, len(nums)-1)
+    return nums
+
+
+#print(5%10)
+
+# FROM 1d to 2d
+
+def construct2DArray(original, m, n):
+    
+    if len(original) != n*m:
+        return []
+
+    res = []
+    checker = 0
+    data = []
+    for i in range(len(original)):
+        data.append(original[i])
+        checker += 1
+        if checker == n:
+            res.append(data)
+            data = []
+            checker = 0
+    
+    return res
