@@ -420,7 +420,7 @@ def moveZeroes(nums) -> None:
             l += 1
     print(nums)
 
-print(moveZeroes(nums))
+#print(moveZeroes(nums))
 
 def removeDuplicatesII(nums) -> int:
     l, r = 0, 0
@@ -495,3 +495,35 @@ def construct2DArray(original, m, n):
             checker = 0
     
     return res
+
+#print(100%6)
+
+#print(ord('b') - ord('a') + 1)
+
+def dfs(graph, Node):
+
+    stack = []
+
+
+
+root = [3,9,20,0,0,15,7]
+
+def averageOfLevels(root):
+    l, itera = 0, 0
+    avgs = []
+    n = 0
+    while n <= len(root):
+        n += 2**itera
+        avg = 0
+        if n > len(root):
+            return avgs
+        print(l, n)
+        for i in range(l, n):
+            avg += root[i]
+        
+        avgs.append(avg)
+        l = n
+        itera += 1
+    return avgs
+
+print(averageOfLevels(root))
